@@ -15,8 +15,8 @@ typedef enum {
 
 class Snake {
     Direction direction;
-    Vector2& applePosition;
-    Texture2D texture;
+    const Vector2& applePosition;
+    const Texture2D texture;
     float frame;
     std::queue<int> keys;
 
@@ -29,8 +29,8 @@ public:
     std::vector<Vector2> body;
     bool dead;
 
-    Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition,
-          Texture2D texture);
+    Snake(const Vector2 spawn, const int initialLength, const Direction initialDirection,
+          const Vector2& applePosition, const Texture2D texture);
 
     void update(std::function<void()> onEat);
     void draw() const;

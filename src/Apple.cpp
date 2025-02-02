@@ -5,7 +5,7 @@
 #include <ctime>
 #include <iostream>
 
-Apple::Apple(std::shared_ptr<Snake> snake) : snake(snake) {
+Apple::Apple(const std::shared_ptr<Snake> snake) : snake(snake) {
     std::srand(std::time(0));
 
     place();
@@ -21,7 +21,7 @@ bool Apple::inSnake() const {
         return false;
     }
 
-    for (Vector2 part : snake->body) {
+    for (const Vector2 part : snake->body) {
         if (part.x == position.x && part.y == position.y)
             return true;
     }

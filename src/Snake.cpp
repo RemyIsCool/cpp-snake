@@ -9,8 +9,8 @@
 #define FRAME_COUNT 3.0f
 #define FRAME_LENGTH 0.08
 
-Snake::Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition,
-             Texture2D texture)
+Snake::Snake(const Vector2 spawn, const int initialLength, const Direction initialDirection,
+             const Vector2& applePosition, const Texture2D texture)
     : direction(initialDirection), applePosition(applePosition), texture(texture), frame(0),
       keys(std::queue<int>()), body({spawn}) {
     for (int i = 0; i < initialLength - 1; i++) {
@@ -19,7 +19,7 @@ Snake::Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vecto
 }
 
 void Snake::extend() {
-    Vector2 back = body.back();
+    const Vector2 back = body.back();
 
 #define PUSH(dir, xChange, yChange)                                                                \
     case dir:                                                                                      \
@@ -37,14 +37,14 @@ void Snake::extend() {
 }
 
 bool Snake::isOverlapping() const {
-    Vector2 head = body.back();
+    const Vector2 head = body.back();
 
     if (head.x < 0 || head.x >= (float)WIDTH / CELL_SIZE || head.y < 0 ||
         head.y >= (float)HEIGHT / CELL_SIZE) {
         return true;
     }
 
-    for (Vector2 part : std::span<const Vector2>(body.begin(), body.end() - 1)) {
+    for (const Vector2 part : std::span<const Vector2>(body.begin(), body.end() - 1)) {
         if (head.x == part.x && head.y == part.y) {
             return true;
         }
@@ -56,7 +56,7 @@ bool Snake::isOverlapping() const {
 void Snake::update(std::function<void()> onEat) {
     frame = (frame + GetFrameTime());
 
-    int pressedKey = GetKeyPressed();
+    const int pressedKey = GetKeyPressed();
     if (pressedKey != KEY_NULL)
         keys.push(pressedKey);
 
@@ -84,7 +84,7 @@ void Snake::update(std::function<void()> onEat) {
 #undef MOVES
 #undef MOVE
 
-    Vector2 head = body.back();
+    const Vector2 head = body.back();
     if (head.x == applePosition.x && head.y == applePosition.y) {
         onEat();
     } else {
@@ -100,17 +100,17 @@ void Snake::update(std::function<void()> onEat) {
 #define DIFF(var1, var2)                                                                           \
     { var1.x - var2.x, var1.y - var2.y }
 
-float Snake::getTextureXCoord(int index) const {
+float Snake::getTextureXCoord(const int index) const {
     if (index <= 0 || index >= (int)body.size() - 1)
         return texture.width / FRAME_COUNT * 2;
 
     const Vector2 part = body.at(index);
 
     const Vector2 previous = body.at(index - 1);
-    Vector2 diffPrevious = DIFF(part, previous);
+    const Vector2 diffPrevious = DIFF(part, previous);
 
     const Vector2 next = body.at(index + 1);
-    Vector2 diffNext = DIFF(part, next);
+    const Vector2 diffNext = DIFF(part, next);
 
     if (diffPrevious.x != diffNext.x && diffPrevious.y != diffNext.y) {
         return texture.width / FRAME_COUNT;
@@ -119,7 +119,7 @@ float Snake::getTextureXCoord(int index) const {
     return 0;
 }
 
-float Snake::getTextureRotation(int index) const {
+float Snake::getTextureRotation(const int index) const {
     const Vector2 part = body.at(index);
 
     if (index >= (int)body.size() - 1) {
@@ -132,10 +132,10 @@ float Snake::getTextureRotation(int index) const {
     }
 
     const Vector2 previous = body.at(index - 1);
-    Vector2 diffPrevious = DIFF(part, previous);
+    const Vector2 diffPrevious = DIFF(part, previous);
 
     const Vector2 next = body.at(index + 1);
-    Vector2 diffNext = DIFF(part, next);
+    const Vector2 diffNext = DIFF(part, next);
 
     if (previous.x == next.x) {
         return 0;
