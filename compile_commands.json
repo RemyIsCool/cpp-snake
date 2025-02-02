@@ -1,0 +1,94 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang++",
+      "-c",
+      "-framework",
+      "CoreVideo",
+      "-framework",
+      "IOKit",
+      "-framework",
+      "Cocoa",
+      "-framework",
+      "GLUT",
+      "-framework",
+      "OpenGL",
+      "-std=c++23",
+      "-Iinclude",
+      "-Wall",
+      "-Wextra",
+      "src/Apple.cpp"
+    ],
+    "directory": "/Users/remyfouquette/Documents/something",
+    "file": "/Users/remyfouquette/Documents/something/src/Apple.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang++",
+      "-c",
+      "-framework",
+      "CoreVideo",
+      "-framework",
+      "IOKit",
+      "-framework",
+      "Cocoa",
+      "-framework",
+      "GLUT",
+      "-framework",
+      "OpenGL",
+      "-std=c++23",
+      "-Iinclude",
+      "-Wall",
+      "-Wextra",
+      "src/Game.cpp"
+    ],
+    "directory": "/Users/remyfouquette/Documents/something",
+    "file": "/Users/remyfouquette/Documents/something/src/Game.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang++",
+      "-c",
+      "-framework",
+      "CoreVideo",
+      "-framework",
+      "IOKit",
+      "-framework",
+      "Cocoa",
+      "-framework",
+      "GLUT",
+      "-framework",
+      "OpenGL",
+      "-std=c++23",
+      "-Iinclude",
+      "-Wall",
+      "-Wextra",
+      "src/Snake.cpp"
+    ],
+    "directory": "/Users/remyfouquette/Documents/something",
+    "file": "/Users/remyfouquette/Documents/something/src/Snake.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang++",
+      "-c",
+      "-framework",
+      "CoreVideo",
+      "-framework",
+      "IOKit",
+      "-framework",
+      "Cocoa",
+      "-framework",
+      "GLUT",
+      "-framework",
+      "OpenGL",
+      "-std=c++23",
+      "-Iinclude",
+      "-Wall",
+      "-Wextra",
+      "src/main.cpp"
+    ],
+    "directory": "/Users/remyfouquette/Documents/something",
+    "file": "/Users/remyfouquette/Documents/something/src/main.cpp"
+  }
+]
