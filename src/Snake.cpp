@@ -2,7 +2,6 @@
 #include "common.h"
 #include "raylib.h"
 #include <functional>
-#include <iostream>
 #include <span>
 #include <vector>
 
