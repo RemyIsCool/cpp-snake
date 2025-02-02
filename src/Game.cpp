@@ -9,13 +9,11 @@
 
 Game::Game() : apple(snake), score(0) {
     InitWindow(WIDTH, HEIGHT, "Snake");
-    SetTargetFPS(10);
     snakeTexture = LoadTexture("assets/snake.png");
 }
 
 void Game::resetGame() {
-    snake =
-        std::make_shared<Snake>(Snake(Vector2{10, 10}, 10, RIGHT, apple.position, snakeTexture));
+    snake = std::make_shared<Snake>(Snake(Vector2{10, 10}, 3, RIGHT, apple.position, snakeTexture));
     apple.snake = snake;
     score = 0;
     apple.place();

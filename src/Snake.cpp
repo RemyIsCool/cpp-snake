@@ -2,14 +2,17 @@
 #include "common.h"
 #include "raylib.h"
 #include <functional>
+#include <queue>
 #include <span>
 #include <vector>
 
 #define FRAME_COUNT 3.0f
+#define FRAME_LENGTH 0.08
 
 Snake::Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition,
              Texture2D texture)
-    : direction(initialDirection), applePosition(applePosition), texture(texture), body({spawn}) {
+    : direction(initialDirection), applePosition(applePosition), texture(texture), frame(0),
+      keys(std::queue<int>()), body({spawn}) {
     for (int i = 0; i < initialLength - 1; i++) {
         extend();
     }
@@ -51,6 +54,16 @@ bool Snake::isOverlapping() const {
 }
 
 void Snake::update(std::function<void()> onEat) {
+    frame = (frame + GetFrameTime());
+
+    int pressedKey = GetKeyPressed();
+    if (pressedKey != KEY_NULL)
+        keys.push(pressedKey);
+
+    if (frame < FRAME_LENGTH)
+        return;
+    frame = 0;
+
 #define MOVE(dir, op)                                                                              \
     case KEY_##dir:                                                                                \
         if (direction != op)                                                                       \
@@ -59,9 +72,13 @@ void Snake::update(std::function<void()> onEat) {
 
 #define MOVES(a, b) MOVE(a, b) MOVE(b, a)
 
-    switch (GetKeyPressed()) {
-        MOVES(UP, DOWN);
-        MOVES(LEFT, RIGHT);
+    if (!keys.empty()) {
+        switch (keys.front()) {
+            MOVES(UP, DOWN);
+            MOVES(LEFT, RIGHT);
+            default:;
+        }
+        keys.pop();
     }
 
 #undef MOVES

@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include <functional>
+#include <queue>
 #include <vector>
 
 typedef enum {
@@ -15,8 +16,9 @@ typedef enum {
 class Snake {
     Direction direction;
     Vector2& applePosition;
-
     Texture2D texture;
+    float frame;
+    std::queue<int> keys;
 
     void extend();
     bool isOverlapping() const;
