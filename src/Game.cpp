@@ -2,6 +2,7 @@
 #include "Snake.h"
 #include "common.h"
 #include "raylib.h"
+#include "resource_dir.h"
 #include <format>
 #include <memory>
 
@@ -9,7 +10,8 @@
 
 Game::Game() : apple(snake), score(0) {
     InitWindow(WIDTH, HEIGHT, "Snake");
-    snakeTexture = LoadTexture("assets/snake.png");
+    SearchAndSetResourceDir("assets");
+    snakeTexture = LoadTexture("snake.png");
 }
 
 void Game::resetGame() {
