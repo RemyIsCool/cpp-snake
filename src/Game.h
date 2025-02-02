@@ -5,12 +5,13 @@ class Game {
     std::shared_ptr<Snake> snake;
     Apple apple;
     int score;
+    Texture2D snakeTexture;
 
-    void resetSnake();
+    void resetGame();
 
 public:
     Game();
 
     void update();
-    void draw();
+    void draw() const;
 };

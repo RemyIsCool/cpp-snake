@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 Apple::Apple(std::shared_ptr<Snake> snake) : snake(snake) {
     std::srand(std::time(0));
@@ -10,13 +11,15 @@ Apple::Apple(std::shared_ptr<Snake> snake) : snake(snake) {
     place();
 }
 
-void Apple::draw() {
+void Apple::draw() const {
     DrawRectangle(position.x * CELL_SIZE, position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, RED);
 }
 
-bool Apple::inSnake() {
-    if (snake == nullptr)
+bool Apple::inSnake() const {
+    if (snake == nullptr) {
+        std::cout << "here" << std::endl;
         return false;
+    }
 
     for (Vector2 part : snake->body) {
         if (part.x == position.x && part.y == position.y)
@@ -29,6 +32,6 @@ bool Apple::inSnake() {
 void Apple::place() {
 #define RANDOM(dim) (float)(std::rand() % dim / CELL_SIZE)
     do {
-        position = {RANDOM(WIDTH), RANDOM(HEIGHT)};
+        position = {RANDOM(WIDTH), RANDOM(HEIGHT)}; // NOLINT
     } while (inSnake());
 }

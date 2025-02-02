@@ -3,19 +3,22 @@
 #include "common.h"
 #include "raylib.h"
 #include <format>
-#include <iostream>
 #include <memory>
 
 #define NEW_SNAKE
 
 Game::Game() : apple(snake), score(0) {
     InitWindow(WIDTH, HEIGHT, "Snake");
-    SetTargetFPS(15);
+    SetTargetFPS(10);
+    snakeTexture = LoadTexture("assets/snake.png");
 }
 
-void Game::resetSnake() {
-    snake = std::make_shared<Snake>(Snake(Vector2{10, 10}, 3, RIGHT, apple.position));
+void Game::resetGame() {
+    snake =
+        std::make_shared<Snake>(Snake(Vector2{10, 10}, 10, RIGHT, apple.position, snakeTexture));
+    apple.snake = snake;
     score = 0;
+    apple.place();
 }
 
 void Game::update() {
@@ -26,12 +29,12 @@ void Game::update() {
         });
     } else {
         if (IsKeyPressed(KEY_ENTER)) {
-            resetSnake();
+            resetGame();
         }
     }
 }
 
-void Game::draw() {
+void Game::draw() const {
     BeginDrawing();
     ClearBackground(BLACK);
 

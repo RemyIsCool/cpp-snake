@@ -16,14 +16,19 @@ class Snake {
     Direction direction;
     Vector2& applePosition;
 
+    Texture2D texture;
+
     void extend();
-    bool isOverlapping();
+    bool isOverlapping() const;
+    float getTextureXCoord(int index) const;
+    float getTextureRotation(int index) const;
 
 public:
     std::vector<Vector2> body;
     bool dead;
 
-    Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition);
+    Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition,
+          Texture2D texture);
 
     void update(std::function<void()> onEat);
     void draw() const;

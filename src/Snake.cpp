@@ -1,13 +1,16 @@
 #include "Snake.h"
 #include "common.h"
+#include "raylib.h"
 #include <functional>
+#include <iostream>
 #include <span>
 #include <vector>
 
-Snake::Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition)
-    : direction(initialDirection), applePosition(applePosition) {
-    body = {spawn};
+#define FRAME_COUNT 3.0f
 
+Snake::Snake(Vector2 spawn, int initialLength, Direction initialDirection, Vector2& applePosition,
+             Texture2D texture)
+    : direction(initialDirection), applePosition(applePosition), texture(texture), body({spawn}) {
     for (int i = 0; i < initialLength - 1; i++) {
         extend();
     }
@@ -31,7 +34,7 @@ void Snake::extend() {
 #undef PUSH
 }
 
-bool Snake::isOverlapping() {
+bool Snake::isOverlapping() const {
     Vector2 head = body.back();
 
     if (head.x < 0 || head.x >= (float)WIDTH / CELL_SIZE || head.y < 0 ||
@@ -39,7 +42,7 @@ bool Snake::isOverlapping() {
         return true;
     }
 
-    for (Vector2 part : std::span<Vector2>(body.begin(), body.end() - 1)) {
+    for (Vector2 part : std::span<const Vector2>(body.begin(), body.end() - 1)) {
         if (head.x == part.x && head.y == part.y) {
             return true;
         }
@@ -78,8 +81,76 @@ void Snake::update(std::function<void()> onEat) {
     }
 }
 
+#define DIFF(var1, var2)                                                                           \
+    { var1.x - var2.x, var1.y - var2.y }
+
+float Snake::getTextureXCoord(int index) const {
+    if (index <= 0 || index >= (int)body.size() - 1)
+        return texture.width / FRAME_COUNT * 2;
+
+    const Vector2 part = body.at(index);
+
+    const Vector2 previous = body.at(index - 1);
+    Vector2 diffPrevious = DIFF(part, previous);
+
+    const Vector2 next = body.at(index + 1);
+    Vector2 diffNext = DIFF(part, next);
+
+    if (diffPrevious.x != diffNext.x && diffPrevious.y != diffNext.y) {
+        return texture.width / FRAME_COUNT;
+    }
+
+    return 0;
+}
+
+float Snake::getTextureRotation(int index) const {
+    const Vector2 part = body.at(index);
+
+    if (index >= (int)body.size() - 1) {
+        return direction == RIGHT ? 90 : direction == LEFT ? 270 : direction == DOWN ? 180 : 0;
+    }
+
+    if (index <= 0) {
+        Vector2 diff = DIFF(part, body.at(index + 1));
+        return diff.x == 0 ? (diff.y == 1 ? 180 : 0) : (diff.x == 1 ? 90 : 270);
+    }
+
+    const Vector2 previous = body.at(index - 1);
+    Vector2 diffPrevious = DIFF(part, previous);
+
+    const Vector2 next = body.at(index + 1);
+    Vector2 diffNext = DIFF(part, next);
+
+    if (previous.x == next.x) {
+        return 0;
+    }
+    if (previous.y == next.y) {
+        return 90;
+    }
+
+    const Vector2 sumPrevNext = {diffPrevious.x + diffNext.x, diffPrevious.y + diffNext.y};
+    if (sumPrevNext.x == 1 && sumPrevNext.y == 1)
+        return 180;
+    if (sumPrevNext.x == 1 && sumPrevNext.y == -1)
+        return 90;
+    if (sumPrevNext.x == -1 && sumPrevNext.y == 1)
+        return 270;
+    return 0;
+}
+
 void Snake::draw() const {
-    for (Vector2 part : body) {
-        DrawRectangle(part.x * CELL_SIZE, part.y * CELL_SIZE, CELL_SIZE, CELL_SIZE, GREEN);
+    for (int i = 0; i < (int)body.size(); i++) {
+        const Vector2 part = body.at(i);
+
+        const float xCoord = getTextureXCoord(i);
+
+        const Vector2 offset = {(float)texture.width / FRAME_COUNT / 2.0f *
+                                    (CELL_SIZE / (texture.width / FRAME_COUNT)),
+                                texture.height / 2.0f * (CELL_SIZE / (float)texture.height)};
+
+        DrawTexturePro(
+            texture, {xCoord, 0, texture.width / FRAME_COUNT, (float)texture.height},
+            {part.x * CELL_SIZE + offset.x, part.y * CELL_SIZE + offset.y, CELL_SIZE, CELL_SIZE},
+            offset, getTextureRotation(i), WHITE);
     }
 }

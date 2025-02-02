@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "common.h"
 #include "raylib.h"
 
 int main() {

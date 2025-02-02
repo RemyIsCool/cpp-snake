@@ -3,14 +3,13 @@
 #include <memory>
 
 class Apple {
-    std::shared_ptr<Snake> snake;
-
-    bool inSnake();
+    bool inSnake() const;
 
 public:
     Vector2 position;
+    std::shared_ptr<Snake> snake;
 
     Apple(std::shared_ptr<Snake> snake);
     void place();
-    void draw();
+    void draw() const;
 };
