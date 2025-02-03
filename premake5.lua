@@ -16,12 +16,7 @@ libdirs { "lib" }
 links { "raylib" }
 
 filter "system:macosx"
-links {
-    "raylib",
-    "pthread",
-    "dl",
-    "objc"
-}
+links { "pthread", "dl", "objc" }
 linkoptions { "-framework Cocoa", "-framework OpenGL", "-framework IOKit", "-framework CoreVideo" }
 
 filter "system:windows"
