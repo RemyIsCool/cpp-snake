@@ -1,2 +1,6 @@
-.cache
-snake
+/.cache
+/compile_commands.json
+/*.make
+/Makefile
+/obj
+/bin
