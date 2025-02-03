@@ -1,7 +1,7 @@
 ---@diagnostic disable: undefined-global
 workspace "Snake"
 configurations { "Debug", "Release" }
-architecture "x86_64"
+architecture "ARM64"
 
 project "Snake"
 kind "ConsoleApp"

@@ -3,39 +3,6 @@
     "arguments": [
       "/usr/bin/clang++",
       "-Iinclude",
-      "-m64",
-      "-g",
-      "-std=c++23",
-      "-c",
-      "-o",
-      "obj/Debug/Apple.o",
-      "src/Apple.cpp"
-    ],
-    "directory": "/Users/remyfouquette/Documents/snake-cpp",
-    "file": "/Users/remyfouquette/Documents/snake-cpp/src/Apple.cpp",
-    "output": "/Users/remyfouquette/Documents/snake-cpp/obj/Debug/Apple.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-Iinclude",
-      "-m64",
-      "-g",
-      "-std=c++23",
-      "-c",
-      "-o",
-      "obj/Debug/Game.o",
-      "src/Game.cpp"
-    ],
-    "directory": "/Users/remyfouquette/Documents/snake-cpp",
-    "file": "/Users/remyfouquette/Documents/snake-cpp/src/Game.cpp",
-    "output": "/Users/remyfouquette/Documents/snake-cpp/obj/Debug/Game.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-Iinclude",
-      "-m64",
       "-g",
       "-std=c++23",
       "-c",
@@ -46,21 +13,5 @@
     "directory": "/Users/remyfouquette/Documents/snake-cpp",
     "file": "/Users/remyfouquette/Documents/snake-cpp/src/Snake.cpp",
     "output": "/Users/remyfouquette/Documents/snake-cpp/obj/Debug/Snake.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang++",
-      "-Iinclude",
-      "-m64",
-      "-g",
-      "-std=c++23",
-      "-c",
-      "-o",
-      "obj/Debug/main.o",
-      "src/main.cpp"
-    ],
-    "directory": "/Users/remyfouquette/Documents/snake-cpp",
-    "file": "/Users/remyfouquette/Documents/snake-cpp/src/main.cpp",
-    "output": "/Users/remyfouquette/Documents/snake-cpp/obj/Debug/main.o"
   }
 ]
